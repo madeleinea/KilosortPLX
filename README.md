@@ -3,13 +3,14 @@ Uses Kilosort to sort Plexon (.plx and .pl2) files
 Using Kilosort to sort Plexon data
 Kilosort is an electrophysiology data sorting program that mostly runs through Matlab. The Python package phy can then be used to display the sorted data and edit it. The files available for download here are taken from Kilosort (https://github.com/cortex-lab/KiloSort) and Plexon’s (OmniPlex and MAP Offline SDK Bundle, http://www.plexon.com/software-downloads?tab=2) files, edited and placed together for Kilosort to work with Plexon data.
 
-Software Requirements:
+# Software Requirements:
 •	Matlab (2015b or later, if using GPU)
 •	Python miniconda 64-bit
 	Follow the instructions from https://github.com/kwikteam/phy to install phy-contrib, which will provide a template GUI to display the data and allow for additional manual sorting
 	 
 	Environment file: https://raw.githubusercontent.com/kwikteam/phy/master/installer/environment.yml 
-Kilosort Installation:
+
+# Kilosort Installation:
 1.	Download all files, and place them in a kilosort folder together on your computer
 2.	Ensure that the file you would like to sort is in the RawData Folder of your Kilosort folder. 
 3.	In the PLXMasterFile.m file, edit the PATH variable to be the path to your kilosort folder. Use double slashes rather than single ones. Example: 'C:\\Users\\allema\\Desktop\\KilosortPLX\\'
@@ -26,12 +27,12 @@ i.	If you would rather run single files based on user input, you may comment out
 10.	If you save from phy, two files will be created and saved into your output folder: spike_clusters.npy and cluster_groups.csv. These will keep a record of your classifications of the units for when you run the template again for that file.
 11.	Look over the PLXStandardConfig file. This is where most of your sorting parameters are set, so editing these values may help to improve the accuracy of your sorted data.
 
-Data Extraction from Kilosort/phy in Matlab
+# Data Extraction from Kilosort/phy in Matlab
 The scripts for extracting spike timestamp, event, and waveform data are located in the Post-KilosortData folder in your Kilosort Folder. Running Kilosort will automatically copy the only file you need to run, which will call all of the files in the Post-KilosortData folder. This will create the cell variables: spiketrain, event_timestamps, and averageWF, and save these variables in a workspace into your Outputs folder (“KilosortData.mat”).
 spiketrain gives the timestamps for each spike in a cell variable. Each cell is an array of timestamps for one cluster. The timestamps are in milliseconds, based on our sampling rate of 40,000/sec. If you have a different sampling rate, you will need to change the value of 40 at line 4 of create_spiketrain.m. 
 event_timestamps gives the timestamps for each event in a cell variable—each cell is an array of timestamps for each event.
 averageWF is a cell variable with each cell giving an array of the average amplitude samples for each waveform. If your sampling rate is different than 40,000, you will need to make some changes in the waveformdata.m file at lines 4, 32, 33, 62, 66, and 78.
 
-Using a GPU
+# Using a GPU
 Most desktop computers have a GPU (graphical processing unit) installed in them. Using a GPU with Kilosort can dramatically decrease the time it takes to run the program. First check to see if you have a GPU (google this, it will be different for every operating system). Here is a link to instructions for how to set up the GPU, provided by Kilosort: https://github.com/cortex-lab/KiloSort/tree/master/Docs. It essentially says that you will need to run mexGPUall.m (in the CUDA folder of your download). To do this, you need CUDA, Visual Studio, and a CUDA-enabled GPU (https://developer.nvidia.com/cuda-gpus). It recommends Visual Studio Community 2012 or 2013, but I had to use Visual Studio Professional 2013 (You only need the free trial version of this, you can access this by creating a free DevEssentials account on Microsoft’s website, then search on their downloads page) with Matlab 2016b and CUDA 7.5 on Windows 7. I think this will be different for every computer and software setup. If you are having trouble, check this page for a list of supported compilers (which Visual Studio, in this case) with your Matlab version: https://www.mathworks.com/support/sysreq/previous_releases.html. Also, here is a link to the different versions of CUDA: https://developer.nvidia.com/cuda-toolkit-archive. Figure out which version of CUDA will work with your version of Matlab (Matlab 2017-CUDA 8.0, Matlab 2016-CUDA 7.5), and download the version you need (You will want to get the local version of the installer). Find the Installation Guide for that version and see which software works with it.
 Once you have successfully run mexGPUall.m in the CUDA folder, change the ops.GPU variable to 1 instead of 0 in the PLXStandardConfig.m file.
