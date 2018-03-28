@@ -12,10 +12,10 @@ Kilosort is an electrophysiology data sorting program that mostly runs through M
 
 # Kilosort Installation:
 1.	Download all files, and place them in a kilosort folder together on your computer
-2.	Ensure that the file you would like to sort is in the RawData Folder of your Kilosort folder. 
+2.	Create a "RawData" folder in your Kilosort folder and put the file you would like to sort into that folder.
 3.	In the PLXMasterFile.m file, edit the PATH variable to be the path to your kilosort folder. Use double slashes rather than single ones. Example: 'C:\\Users\\allema\\Desktop\\KilosortPLX\\'
 4.	Ensure that the ops.GPU variable in PLXStandardConfig is equal to 0 if you haven’t set up the GPU.
-5.	Run PLXMasterFile.m. This is a file that will call all the scripts necessary to run Kilosort. This will create a folder in your kilosort folder with all the outputs for that file in one folder: “Outputs-[your file name]”
+5.	Run PLXMasterFile.m. This is a file that will call all the scripts necessary to run Kilosort. This will create a folder in your kilosort folder with all the outputs for that file in one folder: “Outputs-[your file name]-date”
 •	If you are running .plx files (not .pl2) you will need to enter the number of channels each time you run Kilosort. You may hard-code this in plx_ad_chanmap.m at line 44 by entering n = [number of channels] if all of your files have the same amount of channels recorded.
 •	If you are re-running data through Kilosort, changing line 12 of PLXpreprocessdata.m to “if 0” instead of “if 1” will skip the writing of your file to a raw binary file, which takes a lot of time and is unnecessary if your file has already gone through this step.
 •	If you would like to run many files without any user input, you will either need to run .pl2 files or hard-code the number of channels, and then place all of the files you would like to sort in the RawData folder.
